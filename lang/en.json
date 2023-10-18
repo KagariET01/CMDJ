@@ -1,0 +1,14 @@
+{
+	"loadCFG":"Loading Config File.",
+	"build":"Building Your Code.",
+	"run":"Running:",
+	"fin":"finished:",
+	"TLE":" TLE!",
+	"WA":"  WA!",
+	"RE":" RTE!",
+	"AC":"PASS!",
+	"CE":"COMPILER ERROR!",
+	"time":"Time:",
+	"test":"Test",
+	"allAC":"ALL EXAMPLE TEST PASSED!"
+}
