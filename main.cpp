@@ -11,18 +11,6 @@ template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
 
-const INT mxn=1e6;
-struct dta{
-	INT first=0;
-	INT second=0;
-	INT cnt=0;
-};
-dta bit[mxn+5];
-INT n;
-function<INT(INT)> lowbit=[](INT x){
-	return x&(-x);
-};
-
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
 		string nwstr=argv[i];
@@ -45,13 +33,9 @@ int main(int argc,char** argv){
 		cout<<"===Code start==="<<endl;
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
+
 	function<int(INT)> solve=[](INT casenum){
-		n=read(INT);
-		INT ans=0;
-		for(INT i=0;i<n;i++){
-			INT nw=read(INT);
-		}
-		cout<<ans<<endl;
+		cout<<read(INT)+read(INT)<<endl;
 		return 0;
 	};
 	bool one_case=1;

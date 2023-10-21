@@ -9,7 +9,7 @@ import sys
 import copy
 import platform
 
-DBG=True
+DBG=0
 lang=json.loads(open("lang/ch.json","r",encoding="utf-8").read())
 
 #讀取設定檔
@@ -18,7 +18,7 @@ print(lang["loadCFG"])
 cfg=json.loads(open("config.json","r",encoding="utf-8").read())
 
 def pathget(i,tpe):
-	return cfg["path"]+"{:0>2d}".format(i)+tpe
+	return cfg["path"]+("{:0>"+str(cfg["numlen"])+"d}").format(i+cfg["stnum"])+tpe
 print(pathget(1,".in"))
 #編譯
 print(lang["build"])
@@ -69,6 +69,8 @@ def coderunner(i):#執行
 		#print("> type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out")+" & timeout /NOBREAK /T "+str(cfg["tl"])+" > \"DBG\" & taskkill /f /im run.exe > \"DBG\"")
 		nwtm=os
 		result[i]["st"]=time.time()
+		if(DBG):
+			print("> type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out"))
 		nwtm.system("type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out"))
 		result[i]["ed"]=time.time()
 	else:
@@ -107,7 +109,12 @@ def judge(i):
 
 i=0
 while(True):
+	if(DBG):
+		print("now case",i)
+		print("finding file",pathget(i,".in"))
 	if(not os.path.isfile(pathget(i,".in"))):
+		if(DBG):
+			print("file",i,"not found")
 		break
 	if(open(pathget(i,".in"),"r",encoding="utf-8").read()==""):
 		break
