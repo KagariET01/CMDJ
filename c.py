@@ -3,29 +3,33 @@ import time
 import os
 import json
 import colorama
-from colorama import Fore, Style
+from colorama import Fore, Style, Back
 import threading
 import sys
 import copy
 import platform
 
+print(Back.BLACK)
+
 DBG=0
 lang=json.loads(open("lang/ch.json","r",encoding="utf-8").read())
 
 #讀取設定檔
-print("OS:",platform.system())
+print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
 print(lang["loadCFG"])
 cfg=json.loads(open("config.json","r",encoding="utf-8").read())
 
 def pathget(i,tpe):
 	return cfg["path"]+("{:0>"+str(cfg["numlen"])+"d}").format(i+cfg["stnum"])+tpe
-print(pathget(1,".in"))
+if(DBG):
+	print(pathget(1,".in"))
 #編譯
-print(lang["build"])
+print(lang["build"],end="")
 os.system("rm run")
 if(os.system("g++ -o run main.cpp")):
 	print(Fore.YELLOW+lang["CE"])
 	exit()
+print("\r",end="")
 
 result=[]
 tmp={
@@ -77,12 +81,12 @@ def coderunner(i):#執行
 		result[i]["st"]=time.time()
 		if(os.system("timeout "+str(cfg["tl"]+0.2)+" ./run < "+pathget(i,".in")+" > "+pathget(i,".out"))):
 			result[i]["re"]=True
-			result[i]["ac"]=True
+			result[i]["ac"]=False
 		result[i]["ed"]=time.time()
 
 def judge(i):
 	run=threading.Thread(target=coderunner,args=(i,))
-	print(lang["run"],i)
+	print(Fore.LIGHTCYAN_EX+lang["run"],i,end="")
 	run.start()
 	run.join()
 	outf=open(pathget(i,".out"),"r",encoding="utf-8").read().lower()
@@ -103,7 +107,11 @@ def judge(i):
 	else:
 		result[i]["wa"]=1
 		result[i]["ac"]=0
-	print(lang["fin"],i)
+	if(cfg["sync"]):
+		print()
+		print(lang["fin"],i)
+	else:
+		print("\b\b\r",end="")
 
 
 
@@ -121,29 +129,33 @@ while(True):
 	result.append(copy.copy(tmp))
 	result[i]["runner"]=threading.Thread(target=judge,args=(i,))
 	result[i]["runner"].start()
+	if(not cfg["sync"]):
+		result[i]["runner"].join()
 	i+=1
 
-for i in range(len(result)):
-	result[i]["runner"].join()
+if(cfg["sync"]):
+	for i in range(len(result)):
+		result[i]["runner"].join()
 
 allAC=True
 for i in range(0,len(result),1):
 	if(result[i]["ac"]):
-		print(Fore.GREEN+lang["test"],i,":",lang["AC"],Fore.WHITE+lang["time"],result[i]["ed"]-result[i]["st"])
+		print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["test"],i,":",lang["AC"],end="")
 	elif(result[i]["re"]):
-		print(Fore.YELLOW+lang["test"],i,":",lang["RE"],Fore.WHITE+lang["time"],result[i]["ed"]-result[i]["st"])
+		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["RE"],end="")
 		allAC=False
 	elif(result[i]["tl"]):
-		print(Fore.YELLOW+lang["test"],i,":",lang["TLE"],Fore.WHITE+lang["time"],result[i]["ed"]-result[i]["st"])
+		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["TLE"],end="")
 		allAC=False
 	elif(result[i]["wa"]):
-		print(Fore.YELLOW+lang["test"],i,":",lang["WA"],Fore.WHITE+lang["time"],result[i]["ed"]-result[i]["st"])
+		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["WA"],end="")
 		allAC=False
+	print(Back.BLACK+Fore.LIGHTYELLOW_EX+lang["time"],result[i]["ed"]-result[i]["st"])
 
 if(allAC):
-	print(lang["allAC"])
+	print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["allAC"]+Back.RESET+Fore.RESET)
 	exit()
 else:
-	print("no pass")
+	print(Back.LIGHTRED_EX+Fore.BLACK+Fore.LIGHTRED_EX+lang["nopass"]+Back.RESET+Fore.RESET)
 	sys.exit(0)
 	exit()
