@@ -35,10 +35,55 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
-		
+		INT q,m;
+		cin>>q>>m;
+		function<bool(PII,PII)> vser=[](PII a,PII b){
+			if(a.first!=b.first) return a.first<b.first;
+			else return a.second>b.second;
+		};
+		vector<PII> vec1;
+		vector<PII> vecm;
+		while(q--){
+			INT l,r;
+			cin>>l>>r;
+			r++;
+			if(l!=1){
+				vec1.push_back({l,1});
+				vec1.push_back({r,-1});
+			}
+			if(r!=m+1){
+				vecm.push_back({l,1});
+				vecm.push_back({r,-1});
+			}
+		}
+		sort(vec1.begin(),vec1.end());
+		sort(vecm.begin(),vecm.end());
+		INT lstn=1;
+		INT mx=0;
+		INT nw=0;
+		for(PII i:vec1){
+			//cout<<"nw={"<<i.first<<","<<i.second<<"}"<<endl;
+			if(i.first!=lstn){
+				mx=max(mx,nw);
+			}
+			lstn=i.first;
+			nw+=i.second;
+		}
+		nw=0;
+		lstn=1;
+		//cout<<"=============="<<endl;
+		for(PII i:vecm){
+			//cout<<"nw={"<<i.first<<","<<i.second<<"}"<<endl;
+			if(i.first!=lstn){
+				mx=max(mx,nw);
+			}
+			lstn=i.first;
+			nw+=i.second;
+		}
+		cout<<mx<<endl;
 		return 0;
 	};
-	bool one_case=1;
+	bool one_case=0;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";
