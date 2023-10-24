@@ -37,70 +37,55 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
-		struct dta{
-			INT h;
-			INT i;//實際位置
-			INT mini;//左界
+		INT q,m;
+		cin>>q>>m;
+		function<bool(PII,PII)> vser=[](PII a,PII b){
+			if(a.first!=b.first) return a.first<b.first;
+			else return a.second>b.second;
 		};
-		INT n;
-		cin>>n;
-		vector<INT> h(n);
-		for(INT i=0;i<n;i++){
-			cin>>h[i];
-		}
-		h.push_back(1e9+7);
-		INT mp[n+5];//mp[距離]=高
-		for(INT i=0;i<=n;i++){
-			mp[i]=1e9+7;
-		}
-		stack<dta> st;
-		for(INT i=0;i<=n;i++){
-			DBG{
-				if(st.empty()){
-					cerr<<"st empty"<<endl;
-				}else{
-					cerr<<"st top= h:"<<st.top().h<<" i:"<<st.top().i<<" mini:"<<st.top().mini<<endl;
-				}
-			}
-			while(!st.empty()){
-				if(st.top().h<h[i]){
-					INT hh=i-st.top().mini;//最大距離
-					mp[hh]=min(mp[hh],st.top().h);
-					st.pop();
-				}else if(st.top().h==h[i]){
-					st.top().i=i;
-					break;
-				}else break;
-			}
-			if(st.empty()){
-				dta pp;
-				pp.h=h[i];
-				pp.i=i;
-				pp.mini=0;
-				st.push(pp);
-			}else if(st.top().h==h[i])continue;
-			else{
-				dta pp;
-				pp.h=h[i];
-				pp.i=i;
-				pp.mini=st.top().i+1;
-				st.push(pp);
-			}
-		}
-		INT nw=mp[n];
-		DBG cerr<<"mp: ";
-		for(INT i=n;i>=0;i--){
-			nw=min(nw,mp[i]);
-			mp[i]=nw;
-			DBG cerr<<mp[i]<<" ";
-		}
-		INT q=read(INT);
+		vector<PII> vec1;
+		vector<PII> vecm;
 		while(q--){
-			cout<<mp[read(INT)]<<endl;
+			INT l,r;
+			cin>>l>>r;
+			r++;
+			if(l!=1){
+				vec1.push_back({l,1});
+				vec1.push_back({r,-1});
+			}
+			if(r!=m+1){
+				vecm.push_back({l,1});
+				vecm.push_back({r,-1});
+			}
 		}
+		sort(vec1.begin(),vec1.end());
+		sort(vecm.begin(),vecm.end());
+		INT lstn=1;
+		INT mx=0;
+		INT nw=0;
+		for(PII i:vec1){
+			//cout<<"nw={"<<i.first<<","<<i.second<<"}"<<endl;
+			if(i.first!=lstn){
+				mx=max(mx,nw);
+			}
+			lstn=i.first;
+			nw+=i.second;
+		}
+		nw=0;
+		lstn=1;
+		//cout<<"=============="<<endl;
+		for(PII i:vecm){
+			//cout<<"nw={"<<i.first<<","<<i.second<<"}"<<endl;
+			if(i.first!=lstn){
+				mx=max(mx,nw);
+			}
+			lstn=i.first;
+			nw+=i.second;
+		}
+		cout<<mx<<endl;
 		return 0;
 	};
-	bool one_case=1;
+	bool one_case=0;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";
