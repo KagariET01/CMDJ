@@ -11,6 +11,8 @@ template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
 
+const INT mxn=500000;
+
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
 		string nwstr=argv[i];
@@ -35,7 +37,67 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
-		
+		struct dta{
+			INT h;
+			INT i;//實際位置
+			INT mini;//左界
+		};
+		INT n;
+		cin>>n;
+		vector<INT> h(n);
+		for(INT i=0;i<n;i++){
+			cin>>h[i];
+		}
+		h.push_back(1e9+7);
+		INT mp[n+5];//mp[距離]=高
+		for(INT i=0;i<=n;i++){
+			mp[i]=1e9+7;
+		}
+		stack<dta> st;
+		for(INT i=0;i<=n;i++){
+			DBG{
+				if(st.empty()){
+					cerr<<"st empty"<<endl;
+				}else{
+					cerr<<"st top= h:"<<st.top().h<<" i:"<<st.top().i<<" mini:"<<st.top().mini<<endl;
+				}
+			}
+			while(!st.empty()){
+				if(st.top().h<h[i]){
+					INT hh=i-st.top().mini;//最大距離
+					mp[hh]=min(mp[hh],st.top().h);
+					st.pop();
+				}else if(st.top().h==h[i]){
+					st.top().i=i;
+					break;
+				}else break;
+			}
+			if(st.empty()){
+				dta pp;
+				pp.h=h[i];
+				pp.i=i;
+				pp.mini=0;
+				st.push(pp);
+			}else if(st.top().h==h[i])continue;
+			else{
+				dta pp;
+				pp.h=h[i];
+				pp.i=i;
+				pp.mini=st.top().i+1;
+				st.push(pp);
+			}
+		}
+		INT nw=mp[n];
+		DBG cerr<<"mp: ";
+		for(INT i=n;i>=0;i--){
+			nw=min(nw,mp[i]);
+			mp[i]=nw;
+			DBG cerr<<mp[i]<<" ";
+		}
+		INT q=read(INT);
+		while(q--){
+			cout<<mp[read(INT)]<<endl;
+		}
 		return 0;
 	};
 	bool one_case=1;

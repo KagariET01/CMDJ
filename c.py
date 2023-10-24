@@ -19,6 +19,9 @@ print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
 print(lang["loadCFG"])
 cfg=json.loads(open("config.json","r",encoding="utf-8").read())
 
+if(platform.system()=="Windows"):
+	cfg["path"]=cfg["path"].replace('/','\\')
+
 def pathget(i,tpe):
 	return cfg["path"]+("{:0>"+str(cfg["numlen"])+"d}").format(i+cfg["stnum"])+tpe
 if(DBG):
