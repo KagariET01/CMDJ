@@ -140,6 +140,9 @@ if(cfg["sync"]):
 	for i in range(len(result)):
 		result[i]["runner"].join()
 
+if(not cfg["sync"]):
+	print("\r",end="")
+
 allAC=True
 for i in range(0,len(result),1):
 	if(result[i]["ac"]):

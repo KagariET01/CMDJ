@@ -13,7 +13,6 @@
 #include<cstring>
 #include<iomanip>
 #include<ctime>
-#include<list>
 
 using namespace std;
 #define INT long long int
@@ -26,12 +25,6 @@ bool noTLE=1;
 template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
-
-const INT mxn=1e5;
-INT lca[mxn+1][30];
-INT n;
-vector<INT> tre[mxn];
-INT deep[mxn];
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -57,50 +50,6 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
-		INT n,m;
-		cin>>n>>m;
-		bool mp[n][m];
-		INT cnt=0;
-		for(INT i=0;i<n;i++){
-			string str=read(string);
-			for(INT j=0;j<m;j++){
-				cnt+=(mp[i][j]=(str[j]=='1'));
-			}
-		}
-		list<INT> lst[n];
-		INT x=-1,y=-1;
-		INT ans=0;
-		for(INT i=0;i<n;i++){
-			for(INT j=0;j<m;j++){
-				if(mp[i][j])lst[i].push_back(j);
-			}
-		}
-		while(cnt){
-			for(INT i=0;i<n;i++){
-				if(lst[i].empty())continue;
-				for(list<INT>::iterator j=lst[i].begin();j!=lst[i].end();j++){
-					if(x==-1){
-						x=i;
-						y=*j;
-						ans++;
-						cnt--;
-						lst[i].erase(j);
-						DBG cout<<"get"<<x<<" "<<y<<endl;
-						break;
-					}else if(abs(x-i)>=abs(y-*j) && (abs(y-*j)&1)==(abs(x-i)&1)){
-						x=i;
-						y=(*j);
-						cnt--;
-						lst[i].erase(j);
-						DBG cout<<"get"<<x<<" "<<y<<endl;
-						break;
-					}
-				}
-			}
-			x=y=-1;
-			DBG cout<<"nwans="<<ans<<endl;
-		}
-		cout<<ans<<endl;
 		return 0;
 	};
 	bool one_case=0;
