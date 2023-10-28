@@ -12,7 +12,7 @@ import platform
 print(Back.BLACK)
 
 DBG=0
-lang=json.loads(open("lang/ch.json","r",encoding="utf-8").read())
+lang=json.loads(open("lang/en.json","r",encoding="utf-8").read())
 
 #讀取設定檔
 print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())

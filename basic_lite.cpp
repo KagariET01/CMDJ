@@ -13,6 +13,7 @@
 #include<cstring>
 #include<iomanip>
 #include<ctime>
+#include<list>
 
 using namespace std;
 #define INT long long int
@@ -25,6 +26,12 @@ bool noTLE=1;
 template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
+
+const INT mxn=1e5;
+INT lca[mxn+1][30];
+INT n;
+vector<INT> tre[mxn];
+INT deep[mxn];
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -50,6 +57,7 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
+		/*Your code here*/
 		return 0;
 	};
 	bool one_case=0;
