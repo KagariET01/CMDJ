@@ -40,39 +40,27 @@ int main(int argc,char** argv){
 		cout<<"===Code start==="<<endl;
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
-
-	INT nw=1;
-	for(INT i=1;;i++){
-		for(INT j=0;j<i;j++,nw++){
-			lv[nw]=i;
-			if(nw==1000000)break;
-		}
-		if(nw==1000000)break;
-	}
 	function<int(INT)> solve=[](INT casenum){
-		unsigned INT n=read(INT);
-		bool hve[n+1]={};
-		queue<unsigned INT> que;
-		que.push(n);
-		unsigned ans=0;
-		while(!que.empty()){
-			if(que.front()<=0 || hve[que.front()]){
-				que.pop();
-				continue;
-			}
-			INT nw=que.front();
-			que.pop();
-			hve[nw]=1;
-			ans+=nw*nw;
-			DBG cout<<"a+="<<nw*nw<<endl;
-			if(lv[nw]==lv[nw-1]){
-				que.push(nw-lv[nw]);
-			}
-			if(lv[nw]==lv[nw+1]){
-				que.push(nw-lv[nw]+1);
+		INT n=read(INT);
+		vector<INT> a;
+		a.reserve(n);
+		INT tot=0;
+		for(INT i=0;i<n;i++){a.push_back(read(INT));tot+=a.back();}
+		sort(a.begin(),a.end());
+		INT pre=0;
+		INT l=0;
+		INT ans=tot/2+(tot&1);
+		for(;l<n;l++){
+			DBG cout<<"pre="<<pre<<" l="<<l<<endl;
+			if((pre+a[l])*2<=tot){pre+=a[l];continue;}
+			if((pre)*2==tot)break;
+			else{
+				if(a[l]==1)l++;
+				break;
 			}
 		}
-		//cout<<ans<<endl;
+		ans+=n-l;
+		cout<<ans<<endl;
 		return 0;
 	};
 	bool one_case=0;

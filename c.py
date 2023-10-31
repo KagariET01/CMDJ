@@ -165,3 +165,31 @@ else:
 	print(Back.LIGHTRED_EX+Fore.BLACK+Fore.LIGHTRED_EX+lang["nopass"]+Back.RESET+Fore.RESET)
 	sys.exit(0)
 	exit()
+
+'''
+config.json
+{
+	"tl":1,
+	"path":"io/",
+	"numlen":1,
+	"stnum":0,
+	"sync":true
+}
+
+lang/en.json
+{
+	"loadCFG":"Loading Config File.",
+	"build":"Building Your Code.",
+	"run":"Running:",
+	"fin":"finished:",
+	"TLE":"TLIE!",
+	"WA":"WANS!",
+	"RE":"RTER!",
+	"AC":"PASS!",
+	"CE":"COMPILER ERROR!",
+	"time":"Time:",
+	"test":"Test",
+	"allAC":"ALL EXAMPLE TEST PASSED!",
+	"nopass":"NO PASS!"
+}
+'''
