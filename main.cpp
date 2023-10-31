@@ -16,26 +16,7 @@ template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
 
-const INT mxn=100000;
-INT n,m;
-INT a[mxn+1];
-INT ans=0;
-vector<pair<INT,PII>> tre[mxn+1];//node,(cost,get)
-
-void dfs(INT nw=1,INT lst=-1){
-	for(pair<INT,PII> i:tre[nw]){
-		if(i.first==lst)continue;
-		dfs(i.first,nw);
-		INT mv=abs(a[i.first]-m);//move car
-		ans-=mv*i.second.first;
-		if(mv){
-			ans+=i.second.second;
-		}else if(i.second.first*2<i.second.second){
-			ans+=i.second.second-i.second.first*2;
-		}
-		a[nw]+=a[i.first]-m;
-	}
-}
+int lv[1000001];
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -60,29 +41,45 @@ int main(int argc,char** argv){
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
-	auto solve=[](INT casenum){
-		if(!(cin>>n>>m))return -1;
-		for(INT i=1;i<=n;i++){
-			cin>>a[i];
+	INT nw=1;
+	for(INT i=1;;i++){
+		for(INT j=0;j<i;j++,nw++){
+			lv[nw]=i;
+			if(nw==1000000)break;
 		}
-		ans=0;
-		for(INT i=0;i<=n;i++)tre[i].clear();
-		for(INT i=1;i<n;i++){
-			INT a,b,c,d;
-			cin>>a>>b>>c>>d;
-			d=min(d,150)*2+max(d-150,0);
-			tre[a].push_back({b,{c,d}});
-			tre[b].push_back({a,{c,d}});
+		if(nw==1000000)break;
+	}
+	function<int(INT)> solve=[](INT casenum){
+		unsigned INT n=read(INT);
+		bool hve[n+1]={};
+		queue<unsigned INT> que;
+		que.push(n);
+		unsigned ans=0;
+		while(!que.empty()){
+			if(que.front()<=0 || hve[que.front()]){
+				que.pop();
+				continue;
+			}
+			INT nw=que.front();
+			que.pop();
+			hve[nw]=1;
+			ans+=nw*nw;
+			DBG cout<<"a+="<<nw*nw<<endl;
+			if(lv[nw]==lv[nw-1]){
+				que.push(nw-lv[nw]);
+			}
+			if(lv[nw]==lv[nw+1]){
+				que.push(nw-lv[nw]+1);
+			}
 		}
-		dfs();
-		cout<<ans<<endl;
+		//cout<<ans<<endl;
 		return 0;
 	};
-	bool one_case=1;
+	bool one_case=0;
 	bool ynans=0;
-	bool eof=1;
-	string yes="Yes";
-	string no="No";
+	bool eof=0;
+	string yes="YES";
+	string no="NO";
 	INT t=(one_case?1:read(int));
 	for(INT i=0;eof || i<t;i++){
 		INT re=solve(i);

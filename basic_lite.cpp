@@ -31,11 +31,7 @@ template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
 
-const INT mxn=1e5;
-INT lca[mxn+1][30];
-INT n;
-vector<INT> tre[mxn];
-INT deep[mxn];
+
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
