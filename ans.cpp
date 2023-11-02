@@ -1,58 +1,100 @@
-//By: Luogu@rui_er(122461)
-#include <bits/stdc++.h>
-#define rep(x,y,z) for(ll x=y;x<=z;x++)
-#define per(x,y,z) for(ll x=y;x>=z;x--)
-#define debug printf("Running %s on line %d...\n",__FUNCTION__,__LINE__)
-#define fileIO(s) do{freopen(s".in","r",stdin);freopen(s".out","w",stdout);}while(false)
+#include<bits/stdc++.h>
+//#include<iostream>
+//#include<cstring>
+//#include<algorithm>
+//#include<cmath>
+//#include<string>
+//#include<sstream>
+//#include<vector>
+//#include<queue>
+//#include<deque>
+//#include<map>
+//#include<set>
+//#include<cstring>
+//#include<iomanip>
+//#include<ctime>
+//#include<list>
+
 using namespace std;
-typedef long long ll;
-const ll N = 1e6+5;
+#define INT long long int
+#define endl "\n"
+#define read(n) reader<n>()
+#define DBG if(debug)
+#define PII pair<INT,INT>
+#define max(a,b) ((a>b)?a:b)
+#define min(a,b) ((a<b)?a:b)
+#define maxs(a,b) a=max(a,b)
+#define mins(a,b) a=min(a,b)
+bool debug=0;
+bool noTLE=1;
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 
-ll n, m, a[N], L[N], R[N], pos[N], tot, sz, buc[N], now, ans[N];
-template<typename T> void chkmin(T& x, T y) {if(x > y) x = y;}
-template<typename T> void chkmax(T& x, T y) {if(x < y) x = y;}
-struct Query {
-	ll l, r, id;
-	Query(ll a=0, ll b=0, ll c=0) : l(a), r(b), id(c) {}
-	~Query() {}
-	friend bool operator < (const Query& a, const Query& b) {
-		if(pos[a.l] == pos[b.l]) return a.r < b.r;
-		return a.l < b.l;
+int main(int argc,char** argv){
+	for(int i=0;i<argc;i++){
+		string nwstr=argv[i];
+		if(nwstr=="-Dev"){
+			debug=1;
+			noTLE=0;
+		}else if(nwstr=="-TLE"){
+			noTLE=0;
+		}
 	}
-}q[N];
-void ins(ll i) {
-	if(buc[a[i]] & 1) ++now;
-	++buc[a[i]];
-}
-void del(ll i) {
-	--buc[a[i]];
-	if(buc[a[i]] & 1) --now;
-}
+	DBG{
+		cout<<"Temp by KagariET01"<<endl;
+		cout<<"My Webpage: https://kagariet01.github.io/about"<<endl;
+		cout<<"===DBG mod on==="<<endl;
+		cout<<"Here's your CFG"<<endl;
+		for(int i=0;i<argc;i++){
+			string nwstr=argv[i];
+			cout<<'['<<nwstr<<']'<<endl;
+		}
+		cout<<"===Code start==="<<endl;
+	}
+	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
-int main() {
-	scanf("%lld", &n);
-	rep(i, 1, n) scanf("%lld", &a[i]);
-	sz = max((ll)sqrt(n), 1LL);
-	while(++tot) {
-		L[tot] = R[tot-1] + 1;
-		R[tot] = min(n, tot*sz);
-		rep(i, L[tot], R[tot]) pos[i] = tot;
-		if(R[tot] == n) break; 
+	function<int(INT)> solve=[](INT casenum){
+		INT n,q;
+		cin>>n>>q;
+		INT a[n];
+		vector<INT> x;
+		x.reserve(q);
+		for(INT i=0;i<n;i++){cin>>a[i];}
+		for(INT i=0;i<q;i++){INT inin=read(INT);if(x.empty() || inin<x.back())x.push_back(inin);}
+		for(INT i=0;i<n;i++){
+			for(INT j:x){
+				DBG cout<<"a[i]="<<a[i]<<",j="<<j<<endl;
+				if(!(a[i]%(1<<j))){
+					a[i]+=1<<(j-1);
+				}
+			}
+		}
+		for(INT i=0;i<n;i++){
+			if(i)cout<<" ";
+			cout<<a[i];
+		}
+		cout<<endl;
+		return 0;
+	};
+	bool one_case=0;
+	bool ynans=0;
+	bool eof=0;
+	string yes="YES";
+	string no="NO";
+	INT t=(one_case?1:read(int));
+	for(INT i=0;eof || i<t;i++){
+		INT re=solve(i);
+		if(!ynans){
+			if(re==-1)return 0;
+		}else{
+			if(re==1){
+				cout<<yes<<endl;
+			}else if(re==0){
+				cout<<no<<endl;
+			}else{
+				return 0;
+			}
+		}
 	}
-	scanf("%lld", &m);
-	rep(i, 1, m) {
-		scanf("%lld%lld", &q[i].l, &q[i].r);
-		q[i].id = i;
-	}
-	sort(q+1, q+1+m);
-	ll l = 1, r = 0;
-	rep(i, 1, m) {
-		while(l > q[i].l) ins(--l);
-		while(r < q[i].r) ins(++r);
-		while(r > q[i].r) del(r--);
-		while(l < q[i].l) del(l++);
-		ans[q[i].id] = now;
-	}
-	rep(i, 1, m) printf("%lld\n", ans[i]);
-    return 0;
+	return 0;
 }
+/**/

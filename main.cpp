@@ -29,8 +29,6 @@ bool debug=0;
 bool noTLE=1;
 template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 
-INT loop=320;
-
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
 		string nwstr=argv[i];
@@ -55,42 +53,29 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
-		INT n;
-		if(!(cin>>n))return -1;
-		vector<INT> a;
-		a.reserve(n);
-		for(INT i=0;i<n;i++){a.push_back(read(INT));}
-		INT block[n+1][loop]={};
+		INT n,q;
+		cin>>n>>q;
+		INT a[n];
+		vector<INT> x;
+		x.reserve(q);
+		for(INT i=0;i<n;i++){cin>>a[i];}
+		for(INT i=0;i<q;i++){INT inin=read(INT);if(x.empty() || inin<x.back())x.push_back(inin);}
 		for(INT i=0;i<n;i++){
-			block[a[i]][i/loop]++;
-		}
-		INT q=read(INT);
-		while(q--){
-			INT l,r;
-			cin>>l>>r;
-			l--,r--;
-			INT cnt[n]={};
-			while(l<=r){
-				if(l%loop==0 && l+loop<=r){
-					for(INT i=0;i<=n;i++){
-						cnt[i]+=block[i][l/loop];
-					}
-					l+=loop;
-				}else{
-					cnt[a[l]]++;
-					l++;
+			for(INT j:x){
+				DBG cout<<"a[i]="<<a[i]<<",j="<<j<<endl;
+				if(!(a[i]%(1<<j))){
+					a[i]+=1<<(j-1);
 				}
-				DBG cerr<<"l="<<l<<" r="<<r<<endl;
 			}
-			INT ans=0;
-			for(INT i=0;i<=n;i++){
-				ans+=cnt[i]/2;
-			}
-			cout<<ans<<endl;
 		}
+		for(INT i=0;i<n;i++){
+			if(i)cout<<" ";
+			cout<<a[i];
+		}
+		cout<<endl;
 		return 0;
 	};
-	bool one_case=1;
+	bool one_case=0;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";
