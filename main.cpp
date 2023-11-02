@@ -1,4 +1,19 @@
 #include<bits/stdc++.h>
+//#include<iostream>
+//#include<cstring>
+//#include<algorithm>
+//#include<cmath>
+//#include<string>
+//#include<sstream>
+//#include<vector>
+//#include<queue>
+//#include<deque>
+//#include<map>
+//#include<set>
+//#include<cstring>
+//#include<iomanip>
+//#include<ctime>
+//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -12,11 +27,9 @@ using namespace std;
 #define mins(a,b) a=min(a,b)
 bool debug=0;
 bool noTLE=1;
-template<typename tpe>tpe reader(){
-	tpe re;cin>>re;return re;
-}
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 
-int lv[1000001];
+INT loop=320;
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -40,30 +53,44 @@ int main(int argc,char** argv){
 		cout<<"===Code start==="<<endl;
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
+
 	function<int(INT)> solve=[](INT casenum){
-		INT n=read(INT);
+		INT n;
+		if(!(cin>>n))return -1;
 		vector<INT> a;
 		a.reserve(n);
-		INT tot=0;
-		for(INT i=0;i<n;i++){a.push_back(read(INT));tot+=a.back();}
-		sort(a.begin(),a.end());
-		INT pre=0;
-		INT l=0;
-		INT ans=tot/2+(tot&1);
-		for(;l<n;l++){
-			DBG cout<<"pre="<<pre<<" l="<<l<<endl;
-			if((pre+a[l])*2<=tot){pre+=a[l];continue;}
-			if((pre)*2==tot)break;
-			else{
-				if(a[l]==1)l++;
-				break;
-			}
+		for(INT i=0;i<n;i++){a.push_back(read(INT));}
+		INT block[n+1][loop]={};
+		for(INT i=0;i<n;i++){
+			block[a[i]][i/loop]++;
 		}
-		ans+=n-l;
-		cout<<ans<<endl;
+		INT q=read(INT);
+		while(q--){
+			INT l,r;
+			cin>>l>>r;
+			l--,r--;
+			INT cnt[n]={};
+			while(l<=r){
+				if(l%loop==0 && l+loop<=r){
+					for(INT i=0;i<=n;i++){
+						cnt[i]+=block[i][l/loop];
+					}
+					l+=loop;
+				}else{
+					cnt[a[l]]++;
+					l++;
+				}
+				DBG cerr<<"l="<<l<<" r="<<r<<endl;
+			}
+			INT ans=0;
+			for(INT i=0;i<=n;i++){
+				ans+=cnt[i]/2;
+			}
+			cout<<ans<<endl;
+		}
 		return 0;
 	};
-	bool one_case=0;
+	bool one_case=1;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";

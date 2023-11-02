@@ -21,17 +21,13 @@ using namespace std;
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
-#define max(a,b) ((a>b)?a:b)
-#define min(a,b) ((a<b)?a:b)
+//#define max(a,b) ((a>b)?a:b)
+//#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
 bool debug=0;
 bool noTLE=1;
-template<typename tpe>tpe reader(){
-	tpe re;cin>>re;return re;
-}
-
-
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){

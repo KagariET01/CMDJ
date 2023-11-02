@@ -3,5 +3,5 @@
 	"path":"io/",
 	"numlen":1,
 	"stnum":0,
-	"sync":true
+	"sync":false
 }

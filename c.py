@@ -24,8 +24,8 @@ if(platform.system()=="Windows"):
 
 def pathget(i,tpe):
 	return cfg["path"]+("{:0>"+str(cfg["numlen"])+"d}").format(i+cfg["stnum"])+tpe
-if(DBG):
-	print(pathget(1,".in"))
+
+
 #編譯
 print(lang["build"],end="")
 os.system("rm run")
@@ -43,31 +43,6 @@ tmp={
 	"wa":0,
 	"re":0
 }
-
-class KThread(threading.Thread):#執行器，支援kill
-	def __init__(self, *args, **keywords):
-		threading.Thread.__init__(self, *args, **keywords)
-		self.killed = False
-	def start(self):
-		self.__run_backup = self.run
-		self.run = self.__run     
-		threading.Thread.start(self)
-	def __run(self):
-		sys.settrace(self.globaltrace)
-		self.__run_backup()
-		self.run = self.__run_backup
-	def globaltrace(self, frame, why, arg):
-		if why == 'call':
-			return self.localtrace
-		else:
-			return None
-	def localtrace(self, frame, why, arg):
-		if self.killed:
-			if why == 'line':
-				raise SystemExit()
-		return self.localtrace
-	def kill(self):
-		self.killed = True
 
 
 def coderunner(i):#執行
@@ -117,7 +92,7 @@ def judge(i):
 		print("\b\b\r",end="")
 
 
-
+#執行
 i=0
 while(True):
 	if(DBG):
@@ -143,6 +118,8 @@ if(cfg["sync"]):
 if(not cfg["sync"]):
 	print("\r",end="")
 
+
+#輸出結果
 allAC=True
 for i in range(0,len(result),1):
 	if(result[i]["ac"]):
