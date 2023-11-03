@@ -2,14 +2,19 @@ import random
 
 mxntt=2e5
 
-print(1)
-
 def random_num(mn,mx):
 	return random.randint(mn,mx)
 
+print(1)
+
+
+
 mnn=1
-mxn=1e5
+mxn=2e5
 n=random_num(mnn,mxn)
+
+print(n)
+'''
 m=random_num(mnn,mxn)
 print(n,m)
 mna=1
@@ -23,4 +28,4 @@ mxq=30
 for i in range(m):
 	print(random_num(mnq,mxq),end=" ")
 print()
-
+'''

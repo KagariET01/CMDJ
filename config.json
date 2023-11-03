@@ -1,7 +1,14 @@
 {
 	"tl":1,
 	"path":"io/",
+	"auto_case_path":"auto_io",
 	"numlen":1,
 	"stnum":0,
-	"sync":false
+	"ednum":1,
+	"sync":true,
+	"case_result_output":false,
+	"only_1_line":true,
+	"no_output":false,
+	"rm_file_after_AC":false,
+	"rm_file":false
 }

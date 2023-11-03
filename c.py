@@ -15,8 +15,9 @@ DBG=0
 lang=json.loads(open("lang/en.json","r",encoding="utf-8").read())
 
 #讀取設定檔
-print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
-print(lang["loadCFG"])
+
+#print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
+#print(lang["loadCFG"])
 cfg=json.loads(open("config.json","r",encoding="utf-8").read())
 
 if(platform.system()=="Windows"):
@@ -27,6 +28,7 @@ def pathget(i,tpe):
 
 
 #編譯
+
 print(lang["build"],end="")
 os.system("rm run")
 if(os.system("g++ -o run main.cpp")):
@@ -123,17 +125,22 @@ if(not cfg["sync"]):
 allAC=True
 for i in range(0,len(result),1):
 	if(result[i]["ac"]):
-		print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["test"],i,":",lang["AC"],end="")
+		if(cfg["case_result_output"]):
+			print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["test"],i,":",lang["AC"],end="")
 	elif(result[i]["re"]):
-		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["RE"],end="")
+		if(cfg["case_result_output"]):
+			print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["RE"],end="")
 		allAC=False
 	elif(result[i]["tl"]):
-		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["TLE"],end="")
+		if(cfg["case_result_output"]):
+			print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["TLE"],end="")
 		allAC=False
 	elif(result[i]["wa"]):
-		print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["WA"],end="")
+		if(cfg["case_result_output"]):
+			print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["WA"],end="")
 		allAC=False
-	print(Back.BLACK+Fore.LIGHTYELLOW_EX+lang["time"],result[i]["ed"]-result[i]["st"])
+	if(cfg["case_result_output"]):
+		print(Back.BLACK+Fore.LIGHTYELLOW_EX+lang["time"],result[i]["ed"]-result[i]["st"])
 
 if(allAC):
 	print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["allAC"]+Back.RESET+Fore.RESET)
