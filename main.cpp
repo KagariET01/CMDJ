@@ -1,19 +1,4 @@
-//#include<bits/stdc++.h>
-#include<iostream>
-#include<cstring>
-#include<algorithm>
-#include<cmath>
-#include<string>
-#include<sstream>
-#include<vector>
-#include<queue>
-#include<deque>
-#include<map>
-#include<set>
-#include<cstring>
-#include<iomanip>
-#include<ctime>
-#include<list>
+#include<bits/stdc++.h>
 
 using namespace std;
 #define INT long long int
@@ -21,17 +6,15 @@ using namespace std;
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
+#define max(a,b) ((a>b)?a:b)
+#define min(a,b) ((a<b)?a:b)
+#define maxs(a,b) a=max(a,b)
+#define mins(a,b) a=min(a,b)
 bool debug=0;
 bool noTLE=1;
 template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
-
-const INT mxn=1e5;
-INT lca[mxn+1][30];
-INT n;
-vector<INT> tre[mxn];
-INT deep[mxn];
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -56,72 +39,36 @@ int main(int argc,char** argv){
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
-	function<int(INT)> solve=[](INT casenum){
-		INT n,m;
-		cin>>n>>m;
-		bool mp[n][m];
-		INT cnt=0;
-		for(INT i=0;i<n;i++){
-			string str=read(string);
-			for(INT j=0;j<m;j++){
-				cnt+=(mp[i][j]=(str[j]=='1'));
-			}
-		}
-		list<INT> lst[n];
-		INT x=-1,y=-1;
-		INT ans=0;
-		for(INT i=0;i<n;i++){
-			for(INT j=0;j<m;j++){
-				if(mp[i][j])lst[i].push_back(j);
-			}
-		}
-		while(cnt){
-			for(INT i=0;i<n;i++){
-				if(lst[i].empty())continue;
-				for(list<INT>::iterator j=lst[i].begin();j!=lst[i].end();j++){
-					if(x==-1){
-						x=i;
-						y=*j;
-						ans++;
-						cnt--;
-						lst[i].erase(j);
-						DBG cout<<"get"<<x<<" "<<y<<endl;
-						break;
-					}else if(abs(x-i)>=abs(y-*j) && (abs(y-*j)&1)==(abs(x-i)&1)){
-						x=i;
-						y=(*j);
-						cnt--;
-						lst[i].erase(j);
-						DBG cout<<"get"<<x<<" "<<y<<endl;
-						break;
-					}
-				}
-			}
-			x=y=-1;
-			DBG cout<<"nwans="<<ans<<endl;
-		}
-		cout<<ans<<endl;
-		return 0;
-	};
-	bool one_case=0;
-	bool ynans=0;
-	bool eof=0;
-	string yes="YES";
-	string no="NO";
-	INT t=(one_case?1:read(int));
-	for(INT i=0;eof || i<t;i++){
-		INT re=solve(i);
-		if(!ynans){
-			if(re==-1)return 0;
-		}else{
-			if(re==1){
-				cout<<yes<<endl;
-			}else if(re==0){
-				cout<<no<<endl;
+	unsigned INT ans[1000005]={};
+	int nw=1;
+	int row=1;
+	int lv[1000005]={};
+	DBG cout<<"start"<<endl;
+	for(row=1;;row++){
+		for(int i=0;i<row;i++,nw++){
+			if(i==row-1){
+				ans[nw]=nw*nw;
 			}else{
-				return 0;
+				ans[nw]=ans[nw-row+1]+nw*nw;
 			}
+			if(i)lv[nw]=row;
+			DBG cout<<ans[nw]<<" ";
+			if(nw==1000000)break;
 		}
+		DBG cout<<endl;
+		if(nw==1000000)break;
+	}
+	int t=read(INT);
+	while(t--){
+		int inin=read(INT);
+		INT a=0;
+		while(inin){
+			a+=ans[inin];
+			if(lv[inin])inin-=lv[inin];
+			else break;
+		}
+		cout<<a<<endl;
 	}
 	return 0;
 }
+/**/
