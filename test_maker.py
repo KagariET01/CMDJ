@@ -5,15 +5,21 @@ mxntt=2e5
 def random_num(mn,mx):
 	return random.randint(mn,mx)
 
+
 print(1)
 
-
-
 mnn=1
-mxn=2e5
-n=random_num(mnn,mxn)
+mxn=100
+mnm=
+
+
+
 
 print(n)
+
+
+
+
 '''
 m=random_num(mnn,mxn)
 print(n,m)
