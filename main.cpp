@@ -1,4 +1,22 @@
 #include<bits/stdc++.h>
+<<<<<<< HEAD
+=======
+//#include<iostream>
+//#include<cstring>
+//#include<algorithm>
+//#include<cmath>
+//#include<string>
+//#include<sstream>
+//#include<vector>
+//#include<queue>
+//#include<deque>
+//#include<map>
+//#include<set>
+//#include<cstring>
+//#include<iomanip>
+//#include<ctime>
+//#include<list>
+>>>>>>> 848e5f134734a5c7774a9a8344fcd67a17e92fbd
 
 using namespace std;
 #define INT long long int
@@ -10,11 +28,19 @@ using namespace std;
 #define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
+<<<<<<< HEAD
 bool debug=0;
 bool noTLE=1;
 template<typename tpe>tpe reader(){
 	tpe re;cin>>re;return re;
 }
+=======
+#define ifif if
+#define elif else if
+bool debug=0;
+bool noTLE=1;
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
+>>>>>>> 848e5f134734a5c7774a9a8344fcd67a17e92fbd
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -39,6 +65,7 @@ int main(int argc,char** argv){
 	}
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
+<<<<<<< HEAD
 	unsigned INT ans[1000005]={};
 	int nw=1;
 	int row=1;
@@ -48,6 +75,43 @@ int main(int argc,char** argv){
 		for(int i=0;i<row;i++,nw++){
 			if(i==row-1){
 				ans[nw]=nw*nw;
+=======
+	function<int(INT)> solve=[](INT casenum){
+		INT n,m;
+		cin>>n>>m;
+		vector<INT> vec;
+		vec.reserve(n*m);
+		for(INT i=0;i<n*m;i++){
+			vec.push_back(read(INT));
+		}
+		sort(vec.begin(),vec.end());
+		INT a=
+			(vec[n*m-1]-vec[0])*(max(n,m)-1)+
+			(vec[n*m-1]-vec[1])*(min(n,m)-1)+
+			(vec[n*m-1]-vec[0])*(n-1)*(m-1);
+		INT b=
+			(vec[n*m-1]-vec[0])*(max(n,m)-1)+
+			(vec[n*m-2]-vec[0])*(min(n,m)-1)+
+			(vec[n*m-1]-vec[0])*(n-1)*(m-1);
+		cout<<max(a,b)<<endl;
+		return 0;
+	};
+	bool one_case=0;
+	bool ynans=0;
+	bool eof=0;
+	string yes="YES";
+	string no="NO";
+	INT t=(one_case?1:read(int));
+	for(INT i=0;eof || i<t;i++){
+		INT re=solve(i);
+		if(!ynans){
+			if(re==-1)return 0;
+		}else{
+			if(re==1){
+				cout<<yes<<endl;
+			}else if(re==0){
+				cout<<no<<endl;
+>>>>>>> 848e5f134734a5c7774a9a8344fcd67a17e92fbd
 			}else{
 				ans[nw]=ans[nw-row+1]+nw*nw;
 			}

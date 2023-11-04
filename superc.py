@@ -12,12 +12,20 @@ import platform
 print(Back.BLACK)
 
 DBG=0
-lang=json.loads(open("lang/en.json","r",encoding="utf-8").read())
+lang=json.loads(open("lang/ch.json","r",encoding="utf-8").read())
+
+def printer(s):
+	if(cfg["no_output"]):
+		return
+	if(cfg["only_1_line"]):
+		print("													",end="\r")
+		print(s,end="\r")
+	else:
+		print(s)
 
 #讀取設定檔
-
-#print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
-#print(lang["loadCFG"])
+print(Fore.LIGHTMAGENTA_EX+"OS:",platform.system())
+print(lang["loadCFG"])
 cfg=json.loads(open("config.json","r",encoding="utf-8").read())
 
 if(platform.system()=="Windows"):
@@ -28,13 +36,13 @@ def pathget(i,tpe):
 
 
 #編譯
-
-print(lang["build"],end="")
+printer(lang["build"])
 os.system("rm run")
 if(os.system("g++ -o run main.cpp")):
-	print(Fore.YELLOW+lang["CE"])
+	printer(Fore.YELLOW+lang["CE"])
 	exit()
-print("\r",end="")
+os.system("g++ -o ans ans.cpp")
+#print("\r",end="")
 
 result=[]
 tmp={
@@ -49,26 +57,43 @@ tmp={
 
 def coderunner(i):#執行
 	result[i]["st"]=0
-	if(platform.system()=="Windows"):
-		#print("> type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out")+" & timeout /NOBREAK /T "+str(cfg["tl"])+" > \"DBG\" & taskkill /f /im run.exe > \"DBG\"")
-		nwtm=os
-		result[i]["st"]=time.time()
-		if(DBG):
-			print("> type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out"))
-		nwtm.system("type \""+pathget(i,".in")+"\" | .\\run > "+pathget(i,".out"))
-		result[i]["ed"]=time.time()
-	else:
-		result[i]["st"]=time.time()
-		if(os.system("timeout "+str(cfg["tl"]+0.2)+" ./run < "+pathget(i,".in")+" > "+pathget(i,".out"))):
-			result[i]["re"]=True
-			result[i]["ac"]=False
-		result[i]["ed"]=time.time()
+	result[i]["st"]=time.time()
+	if(os.system("timeout "+str(cfg["tl"]+0.2)+" ./run < "+pathget(i,".in")+" > "+pathget(i,".out"))):
+		result[i]["re"]=True
+		result[i]["ac"]=False
+	result[i]["ed"]=time.time()
+
+def inputmaker(i):
+	os.system("python3 test_maker.py > "+pathget(i,".in"))
+
+def ansmaker(i):
+	os.system("./ans < "+pathget(i,".in")+" > "+pathget(i,".ans"))
+
+
+#執行
+T=int(input("測資數量（-1代表使用自訂測資）："))
+if(T>0):
+	cfg["path"]=cfg["auto_case_path"]
+	os.system("mkdir "+cfg["path"])
 
 def judge(i):
+	if(T>0):
+		#測資生成
+		run=threading.Thread(target=inputmaker,args=(i,))
+		printer(Fore.LIGHTRED_EX+"測資生成中 "+str(i)+Fore.RESET)
+		run.start()
+		run.join()
+		#答案生成
+		run=threading.Thread(target=ansmaker,args=(i,))
+		printer(Fore.LIGHTYELLOW_EX+"答案生成中 "+str(i)+Fore.RESET)
+		run.start()
+		run.join()
+	#執行
 	run=threading.Thread(target=coderunner,args=(i,))
-	print(Fore.LIGHTCYAN_EX+lang["run"],i,end="")
+	printer(Fore.LIGHTCYAN_EX+lang["run"]+" "+str(i)+Fore.RESET)
 	run.start()
 	run.join()
+	#判斷
 	outf=open(pathget(i,".out"),"r",encoding="utf-8").read().lower()
 	ansf=open(pathget(i,".ans"),"r",encoding="utf-8").read().lower()
 	if(not result[i]["ed"]):
@@ -87,29 +112,23 @@ def judge(i):
 	else:
 		result[i]["wa"]=1
 		result[i]["ac"]=0
-	if(cfg["sync"]):
-		print()
-		print(lang["fin"],i)
-	else:
-		print("\b\b\r",end="")
+	printer(Fore.LIGHTGREEN_EX+lang["fin"]+" "+str(i))
 
 
-#執行
+
 i=0
-while(True):
-	if(DBG):
-		print("now case",i)
-		print("finding file",pathget(i,".in"))
-	if(not os.path.isfile(pathget(i,".in"))):
-		if(DBG):
-			print("file",i,"not found")
-		break
-	if(open(pathget(i,".in"),"r",encoding="utf-8").read()==""):
+while(i<T or T==-1):
+	if(T==-1):
+		if(not os.path.isfile(pathget(i,".in"))):#找不到檔案
+			break
+		if(open(pathget(i,".in"),"r",encoding="utf-8").read()==""):#檔案為空
+			break
+	if(i==cfg["ednum"]):
 		break
 	result.append(copy.copy(tmp))
 	result[i]["runner"]=threading.Thread(target=judge,args=(i,))
 	result[i]["runner"].start()
-	if(not cfg["sync"]):
+	if(not cfg["sync"] or cfg["only_1_line"]):
 		result[i]["runner"].join()
 	i+=1
 
@@ -117,7 +136,7 @@ if(cfg["sync"]):
 	for i in range(len(result)):
 		result[i]["runner"].join()
 
-if(not cfg["sync"]):
+if(not cfg["sync"] or cfg["only_1_line"]):
 	print("\r",end="")
 
 
@@ -127,6 +146,10 @@ for i in range(0,len(result),1):
 	if(result[i]["ac"]):
 		if(cfg["case_result_output"]):
 			print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["test"],i,":",lang["AC"],end="")
+		if(cfg["rm_file_after_AC"]):
+			os.system("rm "+pathget(i,".in"))
+			os.system("rm "+pathget(i,".out"))
+			os.system("rm "+pathget(i,".ans"))
 	elif(result[i]["re"]):
 		if(cfg["case_result_output"]):
 			print(Back.LIGHTRED_EX+Fore.BLACK+lang["test"],i,":",lang["RE"],end="")
@@ -141,6 +164,8 @@ for i in range(0,len(result),1):
 		allAC=False
 	if(cfg["case_result_output"]):
 		print(Back.BLACK+Fore.LIGHTYELLOW_EX+lang["time"],result[i]["ed"]-result[i]["st"])
+if(cfg["rm_file"]):
+	os.system("rm -r -f "+cfg["path"])
 
 if(allAC):
 	print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["allAC"]+Back.RESET+Fore.RESET)

@@ -1,18 +1,19 @@
-//#include<bits/stdc++.h>
-#include<iostream>
-#include<cstring>
-#include<algorithm>
-#include<cmath>
-#include<string>
-#include<sstream>
-#include<vector>
-#include<queue>
-#include<deque>
-#include<map>
-#include<set>
-#include<cstring>
-#include<iomanip>
-#include<ctime>
+#include<bits/stdc++.h>
+//#include<iostream>
+//#include<cstring>
+//#include<algorithm>
+//#include<cmath>
+//#include<string>
+//#include<sstream>
+//#include<vector>
+//#include<queue>
+//#include<deque>
+//#include<map>
+//#include<set>
+//#include<cstring>
+//#include<iomanip>
+//#include<ctime>
+//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -20,11 +21,13 @@ using namespace std;
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
+//#define max(a,b) ((a>b)?a:b)
+//#define min(a,b) ((a<b)?a:b)
+#define maxs(a,b) a=max(a,b)
+#define mins(a,b) a=min(a,b)
 bool debug=0;
 bool noTLE=1;
-template<typename tpe>tpe reader(){
-	tpe re;cin>>re;return re;
-}
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -50,6 +53,7 @@ int main(int argc,char** argv){
 	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
 
 	function<int(INT)> solve=[](INT casenum){
+		/*Your code here*/
 		return 0;
 	};
 	bool one_case=0;
@@ -74,3 +78,4 @@ int main(int argc,char** argv){
 	}
 	return 0;
 }
+/**/
