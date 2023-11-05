@@ -36,12 +36,14 @@ def pathget(i,tpe):
 
 
 #編譯
-printer(lang["build"])
-os.system("rm run")
-if(os.system("g++ -o run main.cpp")):
-	printer(Fore.YELLOW+lang["CE"])
-	exit()
-os.system("g++ -o ans ans.cpp")
+a=input("是否編譯？（y/n）")
+if(a.lower()=="y"):
+	printer(lang["build"])
+	os.system("rm run")
+	if(os.system("g++ -o run main.cpp")):
+		printer(Fore.YELLOW+lang["CE"])
+		exit()
+	os.system("g++ -o ans ans.cpp")
 #print("\r",end="")
 
 result=[]

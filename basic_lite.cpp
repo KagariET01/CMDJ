@@ -50,7 +50,7 @@ int main(int argc,char** argv){
 		}
 		cout<<"===Code start==="<<endl;
 	}
-	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
+	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
 
 	function<int(INT)> solve=[](INT casenum){
 		/*Your code here*/

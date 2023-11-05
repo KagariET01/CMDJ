@@ -21,12 +21,10 @@ using namespace std;
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
-#define max(a,b) ((a>b)?a:b)
-#define min(a,b) ((a<b)?a:b)
+//#define max(a,b) ((a>b)?a:b)
+//#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
-#define ifif if
-#define elif else if
 bool debug=0;
 bool noTLE=1;
 template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
@@ -52,29 +50,21 @@ int main(int argc,char** argv){
 		}
 		cout<<"===Code start==="<<endl;
 	}
-	if(noTLE && !debug)cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
+	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
 
 	function<int(INT)> solve=[](INT casenum){
-		INT n,m;
-		cin>>n>>m;
-		vector<INT> vec;
-		vec.reserve(n*m);
-		for(INT i=0;i<n*m;i++){
-			vec.push_back(read(INT));
-		}
-		sort(vec.begin(),vec.end());
-		INT a=
-			(vec[n*m-1]-vec[0])*(max(n,m)-1)+
-			(vec[n*m-1]-vec[1])*(min(n,m)-1)+
-			(vec[n*m-1]-vec[0])*(n-1)*(m-1);
-		INT b=
-			(vec[n*m-1]-vec[0])*(max(n,m)-1)+
-			(vec[n*m-2]-vec[0])*(min(n,m)-1)+
-			(vec[n*m-1]-vec[0])*(n-1)*(m-1);
-		cout<<max(a,b)<<endl;
+		string str;
+		cin>>str;
+		getline(cin,str);
+		cout<<str<<endl;
+
+		/*while(ss>>str){
+			cout<<str<<endl;
+		}*/
+		
 		return 0;
 	};
-	bool one_case=0;
+	bool one_case=1;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";
