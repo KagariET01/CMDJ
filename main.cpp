@@ -53,18 +53,10 @@ int main(int argc,char** argv){
 	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
 
 	function<int(INT)> solve=[](INT casenum){
-		string str;
-		cin>>str;
-		getline(cin,str);
-		cout<<str<<endl;
-
-		/*while(ss>>str){
-			cout<<str<<endl;
-		}*/
-		
+		/*Your code here*/
 		return 0;
 	};
-	bool one_case=1;
+	bool one_case=0;
 	bool ynans=0;
 	bool eof=0;
 	string yes="YES";
