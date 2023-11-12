@@ -16,11 +16,13 @@
 //#include<list>
 
 using namespace std;
-#define INT long long int
+#define INT int
 #define endl "\n"
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
+#define ifif if
+#define elif else if
 //#define max(a,b) ((a>b)?a:b)
 //#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
@@ -28,6 +30,41 @@ using namespace std;
 bool debug=0;
 bool noTLE=1;
 template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
+
+struct str{
+	INT lst[3][3]={};
+};
+
+str operator*(str a,str b){
+	str re;
+	for(INT i=0;i<3;i++){
+		for(INT j=0;j<3;j++){
+			for(INT k=0;k<3;k++){
+				re.lst[i][j]+=a.lst[i][k]*b.lst[k][j];
+			}
+		}
+	}
+	return re;
+}
+
+
+template<typename T>T spow(T a,INT b){
+	if(b==0){
+		T re;
+		return re;
+	}
+	T re=a;
+	T xx=a;
+	b--;
+	while(b){
+		if(b&1)re=re*xx;
+		xx=xx*xx;
+		b>>=1;
+	}
+	return re;
+}
+
+
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -53,12 +90,34 @@ int main(int argc,char** argv){
 	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
 
 	function<int(INT)> solve=[](INT casenum){
-		/*Your code here*/
+		INT n=read(INT);
+		ifif(n==1){
+			cout<<0<<endl;
+			return 0;
+		}elif(n==2){
+			cout<<1<<endl;
+			return 0;
+		}elif(n==3){
+			cout<<3<<endl;
+			return 0;
+		}else{
+			str a;
+			a.lst[0][0]=0;
+			a.lst[0][1]=1;
+			a.lst[0][2]=2;
+			str b;
+			b.lst={
+				{0,0,},
+				{1,0,},
+				{0,1,}
+			};
+		}
+
 		return 0;
 	};
-	bool one_case=0;
+	bool one_case=1;
 	bool ynans=0;
-	bool eof=0;
+	bool eof=1;
 	string yes="YES";
 	string no="NO";
 	INT t=(one_case?1:read(int));

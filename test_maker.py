@@ -9,7 +9,6 @@ print(1)
 
 mnn=1
 mxn=100
-<<<<<<< HEAD
 n=random_num(mnn,mxn)
 m=random_num(mnn,n*(n-1))
 s=random_num(1,n)
@@ -34,21 +33,15 @@ for i in range(m):
 
 
 
-=======
-mnm=
->>>>>>> 1359a6d84392548105f17e9adc7073ce2e0f9c3e
 
 
 
 
-<<<<<<< HEAD
-=======
 print(n)
 
 
 
 
->>>>>>> 1359a6d84392548105f17e9adc7073ce2e0f9c3e
 '''
 m=random_num(mnn,mxn)
 print(n,m)

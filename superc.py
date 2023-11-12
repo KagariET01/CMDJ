@@ -167,7 +167,7 @@ for i in range(0,len(result),1):
 	if(cfg["case_result_output"]):
 		print(Back.BLACK+Fore.LIGHTYELLOW_EX+lang["time"],result[i]["ed"]-result[i]["st"])
 if(cfg["rm_file"]):
-	os.system("rm -r -f "+cfg["path"])
+	os.system("rm -r -f "+cfg["auto_case_path"])
 
 if(allAC):
 	print(Back.LIGHTGREEN_EX+Fore.BLACK+lang["allAC"]+Back.RESET+Fore.RESET)
