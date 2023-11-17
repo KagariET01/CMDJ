@@ -4,7 +4,7 @@
 	"auto_case_path":"auto_io/",
 	"numlen":1,
 	"stnum":0,
-	"ednum":-1,
+	"ednum":2,
 	"auto_test":100,
 	"sync":true,
 	"case_result_output":true,

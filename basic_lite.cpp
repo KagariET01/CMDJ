@@ -25,9 +25,21 @@ using namespace std;
 //#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
+template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 bool debug=0;
 bool noTLE=1;
-template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
+
+bool one_case=1;
+bool ynans=0;
+bool eof=0;
+string yes="YES";
+string no="NO";
+
+function<int(INT)> solve=[](INT casenum){
+	return 0;
+};
+
+
 
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
@@ -51,16 +63,6 @@ int main(int argc,char** argv){
 		cout<<"===Code start==="<<endl;
 	}
 	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
-
-	function<int(INT)> solve=[](INT casenum){
-		/*Your code here*/
-		return 0;
-	};
-	bool one_case=0;
-	bool ynans=0;
-	bool eof=0;
-	string yes="YES";
-	string no="NO";
 	INT t=(one_case?1:read(int));
 	for(INT i=0;eof || i<t;i++){
 		INT re=solve(i);

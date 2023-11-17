@@ -1,61 +1,82 @@
-/*
-[q]
-[]
-*/
-//#ifndef eval
+// O(n log W)
+// Expect: AC
 #include<bits/stdc++.h>
+#define REP(x,y,z) for(int x=y;x<=z;x++)
+#define MSET(x,y) memset(x,y,sizeof(x))
+#define M 100005
 using namespace std;
-#define INT long long int
-#define endl "\n"
-#define read(n) reader<n>()
-#define DBG if(debug)
-#define PII pair<INT,INT>
-bool debug=0;
-template<typename tpe>tpe reader(){
-	tpe re;cin>>re;return re;
-}
-
-int main(){
-	cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);
-	INT t=read(int);
-	while(t--){
-		INT N,M,S,E,F;
-		cin>>N>>M>>S>>E>>F;
-		INT lst[N+1];//紀錄S到i點的最近距離
-		vector<pair<INT,INT>> edge[N+1];
-		fill(lst,lst+N+1,1e16);
-		bool visit[N+1];
-		memset(visit,0,sizeof(visit));
-
-		for(INT i=0;i<M;i++){
-			INT A,B,C,D,C2;
-			cin>>A>>B>>C>>D>>C2;
-			INT V=min(F,D)*C+max((INT)0,F-D)*C2;
-			edge[A].push_back(make_pair(B,V));
-		}
-
-		//do Dijkstra
-		
-		priority_queue<PII,vector<PII>,greater<PII>> pq;
-		pq.push(make_pair(0,S));
-		lst[S]=0;
-
-		while(!pq.empty()){
-			INT nw=pq.top().second;
-			pq.pop();
-			if(visit[nw])continue;
-
-			for(PII i:edge[nw]){
-				INT nxt=i.first,V=i.second;
-				if(lst[nw]+V<lst[nxt]){
-					lst[nxt]=lst[nw]+V;
-					pq.push(make_pair(lst[nxt],nxt));
-				}
+struct Edge {
+	int t, w, id;
+	Edge () {}
+	Edge (int _t, int _w, int _id) { t=_t; w=_w; id=_id; }
+};
+int n, m;
+vector<Edge> e[M];
+bool dfs(int X, vector<int>& s, vector<bool>& vis, vector<bool>& ins, int cur) {
+	vis[cur] = true;
+	ins[cur] = true;
+	for (auto i: e[cur]) if (i.w > X) {
+		if (!vis[i.t]) {
+			if (!dfs(X, s, vis, ins, i.t)) {
+				return false;
 			}
-			visit[nw]=1;
+		} else if (ins[i.t]) {
+			return false;
 		}
-		cout<<lst[E]<<endl;
+	}
+	ins[cur] = false;
+	s.push_back(cur);
+	return true;
+}
+void work() {
+	vector<int> s;
+	vector<bool> vis(n+1, false);
+	vector<bool> ins(n+1, false);
+	auto check = [&](int X){
+		s.clear();
+		fill(vis.begin(), vis.end(), false);
+		fill(ins.begin(), ins.end(), false);
+
+		REP(i,1,n) if (!vis[i]) {
+			if (!dfs(X, s, vis, ins, i)) {
+				return false;
+			}
+		}
+		return true;
+	};
+
+	constexpr int INF = 1'000'000'000;
+	int ng = -1, ok = INF, mid;
+	while (abs(ok-ng) > 1) {
+		mid = (ok + ng) / 2;
+		if (check(mid)) ok = mid;
+		else ng = mid;
+	}
+
+	vector<int> ord(n+1);
+	vector<int> ans;
+	check(ok);
+	REP(i,0,n-1) ord[s[i]] = i;
+	REP(i,1,n) for (auto j: e[i]) if (ord[i] < ord[j.t]) {
+		ans.push_back(j.id);
+	}
+
+	printf("%d %d\n", ok, (int)ans.size());
+	for (int i: ans) {
+		printf("%d\n", i);
+	}
+}
+int main()
+{
+	while (~scanf("%d %d", &n, &m)) {
+		REP(i,1,n) e[i].clear();
+		REP(i,1,m) {
+			int x, y, z;
+			scanf("%d %d %d", &x, &y, &z);
+			e[x].push_back(Edge(y, z, i));
+		}
+
+		work();
 	}
 	return 0;
 }
-//#endif
