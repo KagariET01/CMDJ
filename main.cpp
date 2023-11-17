@@ -31,11 +31,15 @@ bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=0;
+bool eof=1;
 string yes="YES";
 string no="NO";
 
 function<int(INT)> solve=[](INT casenum){
+	string a,b;
+	if(!(cin>>a>>b))return -1;
+	if(a==b)cout<<a<<endl;
+	else cout<<1<<endl;
 	return 0;
 };
 
