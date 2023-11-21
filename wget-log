@@ -1,0 +1,11 @@
+--2023-11-20 17:21:14--  https://docs.google.com/spreadsheets/d/e/2PACX-1vSCbbmkIC6AGg4iuYDwcALSbPeaQgY-bTvJcvkpRHe8YoZsZT2F-tAuyGyT-LwWw6n7xzaetZwifr6e/pub?gid=2021758051
+Resolving docs.google.com (docs.google.com)... 2404:6800:4012::200e, 142.251.43.14
+Connecting to docs.google.com (docs.google.com)|2404:6800:4012::200e|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘pub?gid=2021758051’
+
+pub?gid=2021758051                                              [<=>                                                                                                                                       ]       0  --.-KB/s               pub?gid=2021758051                                              [ <=>                                                                                                                                      ]  10.45K  --.-KB/s    in 0s      
+
+2023-11-20 17:21:14 (228 MB/s) - ‘pub?gid=2021758051’ saved [10702]
+

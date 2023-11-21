@@ -16,7 +16,7 @@
 //#include<list>
 
 using namespace std;
-#define INT long long int
+#define INT int
 #define endl "\n"
 #define read(n) reader<n>()
 #define DBG if(debug)
@@ -37,26 +37,50 @@ string no="NO";
 
 function<int(INT)> solve=[](INT casenum){
 	INT n,m;
-	cin>>n>>m;
-	INT mp[n+1][m+1];
+	if(!(cin>>n>>m))return -1;
+	INT mp[n+1][m+1]={};
 	for(INT i=1;i<=n;i++){
 		for(INT j=1;j<=m;j++){
 			cin>>mp[i][j];
 		}
 	}
-	if(mp[i][j]==-1){
-		cout<<"0\n";
-		return 0;
-	}
-	INT dp[n+m+5][n+5][n+5];
-	for(INT i=0;i<n+m+5;i++){
-		for(INT j=0;j<n+5;j++){
-			for(INT k=0;k<n+5;k++){
+	INT dp[n+m+5][m+5][m+5]={};
+	for(INT i=0;i<=n+m;i++){
+		for(INT j=0;j<=m;j++){
+			for(INT k=0;k<=m;k++){
 				dp[i][j][k]=-1e9;
 			}
 		}
 	}
-	dp[2][1][1]=mp[1][1];
+	dp[2][1][1]=(mp[1][1]==1);
+	if(mp[1][1]==-1){
+		cout<<0<<'\n';return 0;
+	}
+	for(INT i=3;i<=n+m;i++){
+		for(INT j=1;j<=min(m,i-1);j++){
+			INT ii=i-j;
+			if(ii<1 || m<ii)continue;
+			for(INT y=1;y<=min(m,i-1);y++){
+				INT x=i-y;
+				if(y<1 || m<y)continue;
+				if(mp[ii][j]==-1 || mp[x][y]==-1)continue;
+				maxs(dp[i][j][y],dp[i-1][j][y]);
+				maxs(dp[i][j][y],dp[i-1][j][y-1]);
+				maxs(dp[i][j][y],dp[i-1][j-1][y]);
+				maxs(dp[i][j][y],dp[i-1][j-1][y-1]);
+				dp[i][j][y]+=mp[ii][j]+mp[x][y]-(j==y?mp[ii][j]:0);
+			}
+		}
+	}
+	cout<<max(dp[n+m][m][m],0)<<'\n';
+	if(0)DBG{
+		for(INT i=1;i<=n;i++){
+			for(INT j=1;j<=m;j++){
+				cout<<dp[i+j][j][j]<<" ";
+			}
+			cout<<endl;
+		}
+	}
 	return 0;
 };
 
