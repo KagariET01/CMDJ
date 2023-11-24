@@ -31,15 +31,37 @@ bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=1;
-string yes="YES";
-string no="NO";
+bool eof=0;
+string yes="Yes";
+string no="No";
+
+const INT mxn=2505;
+INT n=0;
+bitset<mxn> vis[mxn];
 
 function<int(INT)> solve=[](INT casenum){
-	string a,b;
-	if(!(cin>>a>>b))return -1;
-	if(a==b)cout<<a<<endl;
-	else cout<<1<<endl;
+	INT n;
+	cin>>n;
+	INT a[n+1];
+	INT ans=0;
+	INT nw=0;
+	for(INT i=1;i<=n;i++){
+		cin>>a[i];
+	}
+	for(INT i=1;i<=n;i++){
+		INT p=i;
+		if(a[i]){
+			nw=0;
+			do{
+				INT lst=p;
+				p=a[p];
+				a[lst]=0;
+				nw++;
+			}while(p!=i);
+		}
+		maxs(ans,nw);
+	}
+	cout<<ans<<endl;
 	return 0;
 };
 

@@ -59,6 +59,7 @@
   "python.analysis.typeCheckingMode": "basic",
   "files.associations": {
     "\"*.cpp\"": "c++",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "bitset": "cpp"
   }
 }
