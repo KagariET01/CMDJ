@@ -40,7 +40,7 @@ function<int(INT)> solve=[](INT casenum){
 };
 
 
-
+#ifndef EVAL
 int main(int argc,char** argv){
 	for(int i=0;i<argc;i++){
 		string nwstr=argv[i];
@@ -80,4 +80,5 @@ int main(int argc,char** argv){
 	}
 	return 0;
 }
+#endif
 /**/
