@@ -17,6 +17,7 @@
 
 using namespace std;
 #define INT long long int
+#define FINT long double
 #define endl "\n"
 #define read(n) reader<n>()
 #define DBG if(debug)
@@ -31,7 +32,7 @@ bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=0;
+bool eof=1;
 string yes="YES";
 string no="NO";
 
@@ -63,21 +64,20 @@ int main(int argc,char** argv){
 		cout<<"===Code start==="<<endl;
 	}
 	if(noTLE && !debug){cin.tie(0);cout.tie(0);ios::sync_with_stdio(0);}
-	INT t=(one_case?1:read(int));
-	for(INT i=0;eof || i<t;i++){
-		INT re=solve(i);
-		if(!ynans){
+	do{
+		INT t=(one_case?1:read(int));
+		for(INT i=0;i<t;i++){
+			INT re=solve(i);
 			if(re==-1)return 0;
-		}else{
-			if(re==1){
-				cout<<yes<<endl;
-			}else if(re==0){
-				cout<<no<<endl;
-			}else{
-				return 0;
+			if(ynans){
+				if(re==1){
+					cout<<yes<<endl;
+				}else if(re==0){
+					cout<<no<<endl;
+				}
 			}
 		}
-	}
+	}while(eof);
 	return 0;
 }
 #endif
