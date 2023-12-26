@@ -1,19 +1,7 @@
+// [Q]https://zerojudge.tw/ShowProblem?problemid=m373
+// [AC]
+
 #include<bits/stdc++.h>
-//#include<iostream>
-//#include<cstring>
-//#include<algorithm>
-//#include<cmath>
-//#include<string>
-//#include<sstream>
-//#include<vector>
-//#include<queue>
-//#include<deque>
-//#include<map>
-//#include<set>
-//#include<cstring>
-//#include<iomanip>
-//#include<ctime>
-//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -44,21 +32,6 @@ template<typename T1,typename T2>ostream& operator<<(ostream &cn,pair<T1,T2> p){
 	return (cn<<"{"<<p.first<<","<<p.second<<"}");
 }
 
-ostream &operator<<(ostream &cn,__int128_t &n){
-	if(n<0)cn<<"-";
-	vector<char> vec;
-	__int128_t nw=n;
-	while(nw){
-		vec.push_back((char)'0'+(nw%10));
-		nw/=10;
-	}
-	reverse(vec.begin(),vec.end());
-	for(char c:vec){
-		cn<<c;
-	}
-	return cn;
-}
-
 template<typename T1,typename T2>void operator+=(T1 &a,T2 &b){
 	a=a+b;
 }
@@ -73,7 +46,22 @@ PII operator-(PII &a,PII &b){
 	return make_pair(a.F-b.F,a.S-b.S);
 }
 
-function<int(INT)> solve=[](INT casenum){
+INT dp[30][150010];
+INT a[150010];
+int solve(INT casenum){
+	INT n,k;
+	if(!(cin>>n>>k))return -1;
+	for(INT i=1;i<=n;i++){
+		cin>>a[i];
+	}
+	INT ans=0;
+	for(INT i=1;i<=k+1;i++){
+		for(INT j=1;j<=n;j++){
+			maxs(dp[i][j],max(dp[i-1][j-1],dp[i][j-1]+a[j]));
+			maxs(ans,dp[i][j]);
+		}
+	}
+	cout<<ans<<endl;
 	return 0;
 };
 

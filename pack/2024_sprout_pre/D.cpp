@@ -1,19 +1,4 @@
 #include<bits/stdc++.h>
-//#include<iostream>
-//#include<cstring>
-//#include<algorithm>
-//#include<cmath>
-//#include<string>
-//#include<sstream>
-//#include<vector>
-//#include<queue>
-//#include<deque>
-//#include<map>
-//#include<set>
-//#include<cstring>
-//#include<iomanip>
-//#include<ctime>
-//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -22,8 +7,6 @@ using namespace std;
 #define read(n) reader<n>()
 #define DBG if(debug)
 #define PII pair<INT,INT>
-//#define max(a,b) ((a>b)?a:b)
-//#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
 #define F first
@@ -34,29 +17,14 @@ bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=1;
+bool eof=0;
 string yes="YES";
 string no="NO";
 template<typename T1,typename T2>istream& operator>>(istream &cn,pair<T1,T2> &p){
 	return cn>>p.first>>p.second;
 }
 template<typename T1,typename T2>ostream& operator<<(ostream &cn,pair<T1,T2> p){
-	return (cn<<"{"<<p.first<<","<<p.second<<"}");
-}
-
-ostream &operator<<(ostream &cn,__int128_t &n){
-	if(n<0)cn<<"-";
-	vector<char> vec;
-	__int128_t nw=n;
-	while(nw){
-		vec.push_back((char)'0'+(nw%10));
-		nw/=10;
-	}
-	reverse(vec.begin(),vec.end());
-	for(char c:vec){
-		cn<<c;
-	}
-	return cn;
+	return (cn<<""<<p.first<<" "<<p.second<<"");
 }
 
 template<typename T1,typename T2>void operator+=(T1 &a,T2 &b){
@@ -73,7 +41,61 @@ PII operator-(PII &a,PII &b){
 	return make_pair(a.F-b.F,a.S-b.S);
 }
 
+PII mv[]={
+	{0,-1},
+	{-1,0},
+	{0,1},
+	{1,0}
+};
+
 function<int(INT)> solve=[](INT casenum){
+	INT n;
+	if(!(cin>>n))return -1;
+	char mp[n+5][n+5];
+	for(INT i=0;i<n;i++){
+		cin>>mp[i];
+	}
+	INT l;
+	cin>>l;
+	string str;
+	cin>>str;
+	vector<PII> ans;
+	for(INT x=0;x<n;x++){
+		for(INT y=0;y<n;y++){
+			PII nw={x,y};
+			INT op=0;
+			INT mvc=0;
+			INT nmv=1;
+			bool a=true;
+			DBG cout<<"nw in "<<nw<<endl;
+			for(char c:str){
+				if(nw.F<0 || n<=nw.F ||
+					nw.S<0 || n<=nw.S ||
+					c!=mp[nw.F][nw.S]){
+					a=false;
+					break;
+				}
+				nw+=mv[op];
+				mvc++;
+				if(mvc==nmv){
+					mvc=0;
+					op++;
+					op%=4;
+					if(!(op&1)){
+						nmv++;
+					}
+				}
+			}
+			if(a){
+				ans.push_back({x+1,y+1});
+			}
+			DBG cout<<endl;
+		}
+	}
+	cout<<ans.size()<<endl;
+	for(PII i:ans){
+		cout<<i<<endl;
+	}
 	return 0;
 };
 

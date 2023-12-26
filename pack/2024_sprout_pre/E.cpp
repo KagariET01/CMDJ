@@ -1,19 +1,4 @@
 #include<bits/stdc++.h>
-//#include<iostream>
-//#include<cstring>
-//#include<algorithm>
-//#include<cmath>
-//#include<string>
-//#include<sstream>
-//#include<vector>
-//#include<queue>
-//#include<deque>
-//#include<map>
-//#include<set>
-//#include<cstring>
-//#include<iomanip>
-//#include<ctime>
-//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -26,15 +11,13 @@ using namespace std;
 //#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
-#define F first
-#define S second
 template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 bool debug=0;
 bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=1;
+bool eof=0;
 string yes="YES";
 string no="NO";
 template<typename T1,typename T2>istream& operator>>(istream &cn,pair<T1,T2> &p){
@@ -44,36 +27,21 @@ template<typename T1,typename T2>ostream& operator<<(ostream &cn,pair<T1,T2> p){
 	return (cn<<"{"<<p.first<<","<<p.second<<"}");
 }
 
-ostream &operator<<(ostream &cn,__int128_t &n){
-	if(n<0)cn<<"-";
-	vector<char> vec;
-	__int128_t nw=n;
-	while(nw){
-		vec.push_back((char)'0'+(nw%10));
-		nw/=10;
-	}
-	reverse(vec.begin(),vec.end());
-	for(char c:vec){
-		cn<<c;
-	}
-	return cn;
-}
-
-template<typename T1,typename T2>void operator+=(T1 &a,T2 &b){
-	a=a+b;
-}
-template<typename T1,typename T2>void operator-=(T1 &a,T2 &b){
-	a=a-b;
-}
-
-PII operator+(PII &a,PII &b){
-	return make_pair(a.F+b.F,a.S+b.S);
-}
-PII operator-(PII &a,PII &b){
-	return make_pair(a.F-b.F,a.S-b.S);
-}
-
 function<int(INT)> solve=[](INT casenum){
+	INT n,a,b;
+	if(!(cin>>n>>a>>b))return -1;
+	FINT mx=0;
+	INT ansr=1;
+	INT tot=0;
+	for(INT i=1;i<=n;i++){
+		tot+=read(INT);
+		FINT nw=(FINT)tot/(FINT)(a*2+i*b);
+		if(nw>mx){
+			mx=nw;
+			ansr=i;
+		}
+	}
+	cout<<1<<" "<<ansr<<endl;
 	return 0;
 };
 

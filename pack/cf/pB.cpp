@@ -1,19 +1,4 @@
 #include<bits/stdc++.h>
-//#include<iostream>
-//#include<cstring>
-//#include<algorithm>
-//#include<cmath>
-//#include<string>
-//#include<sstream>
-//#include<vector>
-//#include<queue>
-//#include<deque>
-//#include<map>
-//#include<set>
-//#include<cstring>
-//#include<iomanip>
-//#include<ctime>
-//#include<list>
 
 using namespace std;
 #define INT long long int
@@ -32,7 +17,7 @@ template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 bool debug=0;
 bool noTLE=1;
 
-bool one_case=1;
+bool one_case=0;
 bool ynans=0;
 bool eof=1;
 string yes="YES";
@@ -42,21 +27,6 @@ template<typename T1,typename T2>istream& operator>>(istream &cn,pair<T1,T2> &p)
 }
 template<typename T1,typename T2>ostream& operator<<(ostream &cn,pair<T1,T2> p){
 	return (cn<<"{"<<p.first<<","<<p.second<<"}");
-}
-
-ostream &operator<<(ostream &cn,__int128_t &n){
-	if(n<0)cn<<"-";
-	vector<char> vec;
-	__int128_t nw=n;
-	while(nw){
-		vec.push_back((char)'0'+(nw%10));
-		nw/=10;
-	}
-	reverse(vec.begin(),vec.end());
-	for(char c:vec){
-		cn<<c;
-	}
-	return cn;
 }
 
 template<typename T1,typename T2>void operator+=(T1 &a,T2 &b){
@@ -74,6 +44,26 @@ PII operator-(PII &a,PII &b){
 }
 
 function<int(INT)> solve=[](INT casenum){
+	INT n;
+	if(!(cin>>n))return -1;
+
+	vector<INT> vec;
+	vec.reserve(n);
+	INT mn=1e18;
+	for(INT i=0;i<n;i++){
+		vec.push_back(read(INT));
+		mins(mn,vec.back());
+	}
+	for(INT ans=2;1;ans+=ans){
+		set<INT> se;
+		for(INT i=0;i<n && se.size()<=2;i++){
+			se.insert(vec[i]%ans);
+		}
+		if(se.size()==2){
+			cout<<ans<<endl;
+			return 0;
+		}
+	}
 	return 0;
 };
 

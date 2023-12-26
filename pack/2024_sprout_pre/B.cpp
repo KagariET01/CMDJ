@@ -26,15 +26,13 @@ using namespace std;
 //#define min(a,b) ((a<b)?a:b)
 #define maxs(a,b) a=max(a,b)
 #define mins(a,b) a=min(a,b)
-#define F first
-#define S second
 template<typename tpe>tpe reader(){tpe re;cin>>re;return re;}
 bool debug=0;
 bool noTLE=1;
 
 bool one_case=1;
 bool ynans=0;
-bool eof=1;
+bool eof=0;
 string yes="YES";
 string no="NO";
 template<typename T1,typename T2>istream& operator>>(istream &cn,pair<T1,T2> &p){
@@ -44,36 +42,8 @@ template<typename T1,typename T2>ostream& operator<<(ostream &cn,pair<T1,T2> p){
 	return (cn<<"{"<<p.first<<","<<p.second<<"}");
 }
 
-ostream &operator<<(ostream &cn,__int128_t &n){
-	if(n<0)cn<<"-";
-	vector<char> vec;
-	__int128_t nw=n;
-	while(nw){
-		vec.push_back((char)'0'+(nw%10));
-		nw/=10;
-	}
-	reverse(vec.begin(),vec.end());
-	for(char c:vec){
-		cn<<c;
-	}
-	return cn;
-}
-
-template<typename T1,typename T2>void operator+=(T1 &a,T2 &b){
-	a=a+b;
-}
-template<typename T1,typename T2>void operator-=(T1 &a,T2 &b){
-	a=a-b;
-}
-
-PII operator+(PII &a,PII &b){
-	return make_pair(a.F+b.F,a.S+b.S);
-}
-PII operator-(PII &a,PII &b){
-	return make_pair(a.F-b.F,a.S-b.S);
-}
-
 function<int(INT)> solve=[](INT casenum){
+	
 	return 0;
 };
 
